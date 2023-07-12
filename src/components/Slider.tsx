@@ -1,24 +1,32 @@
+"use client";
+
 import clsx from "clsx";
 import React from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination } from "swiper/modules";
+
+import "swiper/css";
+import "swiper/css/pagination";
 
 const Slider = () => {
-  const arr = [1, 2, 3, 4];
+  const arr = ["yellow", "blue", "gray", "green"];
 
   return (
-    <section className="max-w-[400vw] overflow-hidden ">
-      <div>
+    <section className=" relative">
+      <Swiper
+        slidesPerView={1}
+        navigation={true}
+        modules={[Pagination, Navigation]}
+        pagination={{ clickable: true }}
+        loop={true}
+        className="h-[200px]"
+      >
         {arr.map((slide, index) => (
-          <div
-            className={clsx(
-              `bg-blue-${slide + 1}00`,
-              "w-full h-[250px] inline-block rounded-2xl border"
-            )}
-            key={index}
-          >
-            {slide}
-          </div>
+          <SwiperSlide key={index}>
+            <div className={clsx(`bg-${slide}-400`)}>{slide}</div>
+          </SwiperSlide>
         ))}
-      </div>
+      </Swiper>
     </section>
   );
 };
