@@ -1,34 +1,93 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Next.js Shopping App
 
-## Getting Started
+The Next.js shopping app is a simple e-commerce application that uses Next.js, React, Tailwind CSS, MongoDB, TypeScript and Next Auth. It allows users to browse products, add them to the cart, and checkout using Stripe. The app also has authentication and authorization features using Next Auth and custom hooks.
 
-First, run the development server:
+![App screenshot](./public/screenshot.png)
+
+## Features
+
+- Responsive and user-friendly interface
+- Product listing and filtering by category
+- Shopping cart and checkout functionality
+- Payment integration with Stripe
+- User authentication and authorization with Next Auth
+- Data fetching and storage with MongoDB
+- Type checking with TypeScript
+- Styling with Tailwind CSS
+- Deployment with Vercel
+
+## Installation
+
+To run the app locally, you need to have Node.js, npm, and MongoDB installed on your machine.
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/tehseen01/nextjs-shopping-app.git
+```
+
+2. Install the dependencies:
+
+```bash
+cd nextjs-shopping-app
+npm install
+```
+
+3. Create a `.env.local` file in the root directory and add the following environment variables:
+
+```bash
+MONGODB_URI= # your MongoDB connection string
+NEXTAUTH_URL= # your app URL (e.g. http://localhost:3000)
+STRIPE_SECRET_KEY= # your Stripe secret key
+STRIPE_PUBLIC_KEY= # your Stripe public key
+```
+
+4. Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+5. Open [http://localhost:3000](http://localhost:3000) with your browser to see the app.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Testing
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+To test the app, you can use the following credentials:
 
-## Learn More
+- Email: test@test.com
+- Password: test123
 
-To learn more about Next.js, take a look at the following resources:
+You can also use any email address and password to sign up as a new user.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+To test the payment functionality, you can use the following test card details:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- Card number: 4242 4242 4242 4242
+- Expiry date: any future date
+- CVC: any 3 digits
+- ZIP: any 5 digits
 
-## Deploy on Vercel
+## Demo
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+You can view the live demo of the app deployed on Vercel here: ([https://dev-shopp.vercel.app/](https://dev-shopp.vercel.app/))
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Contribution
+
+If you want to contribute to this project, please follow these guidelines:
+
+- Fork the repository and create a new branch with a descriptive name (e.g. `feature/add-product-rating`)
+- If you are working on any issue, please assign it to yourself or comment on the issue. This will help others to avoid duplicate work and collaborate more effectively.
+- Write clear and concise commit messages and follow the [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/) format
+- Use [Prettier](https://prettier.io/) and [ESLint](https://eslint.org/) to format and lint your code
+- Test your code before pushing it to GitHub
+- Create a pull request with a detailed description of your changes and link it to the related issue (if any)
+- Wait for the code review and feedback
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
+
+## Contact
+
+If you have any questions or feedback, feel free to contact me at tehseen.type@gmail.com.
+
+Thank you for your interest in contributing to the nextjs-shopping-app. We appreciate your efforts to make this project better.
