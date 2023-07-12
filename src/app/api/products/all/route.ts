@@ -69,8 +69,8 @@ export async function POST(request: NextRequest) {
 export async function GET(req: NextRequest) {
   try {
     const q = req.nextUrl.searchParams;
-    const page = parseInt(q.get("page")) || 1;
-    const limit = parseInt(q.get("limit")) || 2;
+    const page = parseInt(q.get("page")!) || 1;
+    const limit = parseInt(q.get("limit")!) || 2;
 
     const brand = q.getAll("brand");
     const category = q.getAll("category");

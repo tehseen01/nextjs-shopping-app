@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function Home() {
   return (
-    <main>
+    <main className="bg-gray-50 pb-8">
       <Slider />
       <section className="grid grid-cols-2 gap-3 my-8 w-[95vw] mx-auto">
         {homeProduct.map((item) => (

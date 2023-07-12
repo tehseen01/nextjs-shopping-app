@@ -12,7 +12,9 @@ const Header = () => {
     <>
       <header className="border-b stick">
         <nav className="flex items-center gap-8 w-[95%] m-auto h-12">
-          <div className="font-medium text-lg">Shop.io</div>
+          <div className="font-medium text-lg">
+            <Link href={"/"}>Shop.io</Link>
+          </div>
 
           <div className="md:hidden flex-1"></div>
           <ul className="md:flex hidden items-center gap-4 flex-1">
