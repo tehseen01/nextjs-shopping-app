@@ -8,27 +8,11 @@ connect();
 export async function POST(request: NextRequest) {
   try {
     const reqBody = await request.json();
-    const {
-      title,
-      description,
-      price,
-      discountPercentage,
-      rating,
-      stock,
-      brand,
-      category,
-      thumbnail,
-      images,
-      colors,
-      sizes,
-      highlights,
-      discountPrice,
-    } = reqBody;
 
     console.log(reqBody);
 
     //check if product already exists
-    const product = await Product.findOne({ title });
+    const product = await Product.findOne({ title: reqBody.title });
 
     if (product) {
       return NextResponse.json(
@@ -37,27 +21,12 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const newProduct = new Product({
-      title,
-      description,
-      price,
-      discountPercentage,
-      rating,
-      stock,
-      brand,
-      category,
-      thumbnail,
-      images,
-      colors,
-      sizes,
-      highlights,
-      discountPrice,
-    });
+    const newProduct = new Product(reqBody);
 
     const saveProduct = await newProduct.save();
 
     return NextResponse.json({
-      message: "Product created successfully",
+      message: "Product added successfully",
       success: true,
       saveProduct,
     });
