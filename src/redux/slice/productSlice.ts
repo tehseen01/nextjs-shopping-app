@@ -1,7 +1,17 @@
+import { IAllProducts } from "@/lib/interface";
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
-  allProducts: [],
+interface InitialState {
+  allProducts: IAllProducts;
+}
+
+const initialState: InitialState = {
+  allProducts: {
+    page: 0,
+    totalPages: 0,
+    totalProducts: 0,
+    products: [],
+  },
 };
 
 const productSlice = createSlice({
@@ -14,5 +24,5 @@ const productSlice = createSlice({
   },
 });
 
-const { setAllProducts } = productSlice.actions;
+export const { setAllProducts } = productSlice.actions;
 export default productSlice.reducer;

@@ -30,15 +30,15 @@ const homeProduct = [
     image: "/mi-tv.jpg",
   },
   {
-    id: 1,
+    id: 2,
     image: "/realme-watch.webp",
   },
   {
-    id: 1,
+    id: 3,
     image: "/realme-11-pro.jpg",
   },
   {
-    id: 1,
+    id: 4,
     image: "/mi-tab.jpg",
   },
 ];
