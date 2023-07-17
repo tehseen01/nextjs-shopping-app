@@ -19,6 +19,9 @@ const Header = () => {
           <div className="md:hidden flex-1"></div>
           <ul className="md:flex hidden items-center gap-4 flex-1">
             <li>
+              <Link href={"/store"}>Store</Link>
+            </li>
+            <li>
               <Link href={"/store"}>Phones</Link>
             </li>
             <li>
