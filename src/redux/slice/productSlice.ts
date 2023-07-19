@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 interface InitialState {
   allProducts: IAllProducts;
+  productLoading: boolean;
 }
 
 const initialState: InitialState = {
@@ -12,6 +13,7 @@ const initialState: InitialState = {
     totalProducts: 0,
     products: [],
   },
+  productLoading: false,
 };
 
 const productSlice = createSlice({
@@ -21,8 +23,12 @@ const productSlice = createSlice({
     setAllProducts: (state, action) => {
       state.allProducts = action.payload;
     },
+
+    setProductLoading: (state, action) => {
+      state.productLoading = action.payload;
+    },
   },
 });
 
-export const { setAllProducts } = productSlice.actions;
+export const { setAllProducts, setProductLoading } = productSlice.actions;
 export default productSlice.reducer;

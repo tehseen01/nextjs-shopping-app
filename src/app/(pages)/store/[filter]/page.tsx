@@ -1,7 +1,12 @@
+import ProductList from "@/components/store/ProductList";
 import React from "react";
 
-const page = ({ params }: { params: { filter: string } }) => {
-  return <div>page: {params.filter}</div>;
+const Page = ({ params }: { params: { filter: string } }) => {
+  return (
+    <>
+      <ProductList />
+    </>
+  );
 };
 
-export default page;
+export default Page;

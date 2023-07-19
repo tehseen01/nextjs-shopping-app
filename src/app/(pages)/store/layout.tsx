@@ -2,55 +2,48 @@
 
 import Categories from "@/components/store/Categories";
 import Filters from "@/components/store/Filters";
-import { IAllProducts, IBrand, ICategory, IProduct } from "@/lib/interface";
-import { useAppDispatch } from "@/redux/hooks";
-import { setAllProducts } from "@/redux/slice/productSlice";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import React, { useEffect } from "react";
+import useFetchProducts from "@/lib/useFetchProducts";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import React from "react";
+import { useParams } from "next/navigation";
+import useBrandCategory from "@/lib/request/useBrandCategory";
+import { setOpenFilter } from "@/redux/slice/filterSlice";
 
 const StoreLayout = ({ children }: { children: React.ReactNode }) => {
+  const params = useParams();
   const dispatch = useAppDispatch();
 
-  const { isLoading, data } = useQuery(["products"], {
-    queryFn: async (): Promise<IAllProducts[]> => {
-      const { data } = await axios.get(`/api/products/all?limit=5`);
+  const { brand, openFilter, sort, rating, offer } = useAppSelector(
+    (state) => state.filter
+  );
 
-      return data;
-    },
-  });
+  const brandFilter = brand.length > 0 ? `&brand=${brand.join("&brand=")}` : "";
+  const catFilter =
+    params.filter === "all"
+      ? ""
+      : params.filter
+      ? `&category=${params.filter}`
+      : "";
+  const sortFilter = sort.order !== "" ? `${(sort.field = sort.order)}` : "";
+  const ratingFilter = rating !== "" ? `&rating=${rating}` : "";
+  const offerFilter = offer !== "" ? `&discountPercentage=${offer}` : "";
 
-  const { data: catData } = useQuery(["category"], {
-    queryFn: async (): Promise<ICategory[]> => {
-      const { data } = await axios.get(`/api/category`);
-      return data;
-    },
-  });
-
-  const { data: brandData } = useQuery(["brand"], {
-    queryFn: async (): Promise<IBrand[]> => {
-      const { data } = await axios.get(`/api/brand`);
-      return data;
-    },
-  });
-
-  useEffect(() => {
-    dispatch(setAllProducts(data));
-  }, [dispatch, data]);
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  useFetchProducts(`${brandFilter}${catFilter}${ratingFilter}${offerFilter}`);
+  const { brandData, catData } = useBrandCategory();
 
   return (
-    <main className="">
-      <div className="grid">
-        {catData && <Categories data={catData} />}
-        <section className="grid grid-cols-[300px_1fr] border-t">
-          {brandData && <Filters brandData={brandData} />}
-          {children}
-        </section>
-      </div>
+    <main className="overflow-hidden">
+      {catData && <Categories data={catData} />}
+      <section className="grid lg:grid-cols-[300px_1fr] md:grid-cols-[250px_1fr] relative border-t">
+        {openFilter && (
+          <div
+            className="fixed inset-0 bg-black/60"
+            onClick={() => dispatch(setOpenFilter(false))}
+          ></div>
+        )}
+        {brandData && <Filters brandData={brandData} />}
+        {children}
+      </section>
     </main>
   );
 };
