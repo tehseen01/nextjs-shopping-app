@@ -4,7 +4,7 @@ import { Instagram, Twitter, Linkedin } from "lucide-react";
 
 const Footer = () => {
   return (
-    <footer className="grid justify-center p-4 gap-8 bg-gray-200 text-base-content rounded border-t">
+    <footer className="grid justify-center p-4 gap-8 bg-gray-200 text-base-content">
       <div className="flex items-center justify-center gap-10">
         <Link href={"#"} className="hover:underline">
           About us
@@ -21,13 +21,16 @@ const Footer = () => {
       </div>
       <div>
         <div className="flex items-center justify-center gap-8">
-          <Link href={"#"} target="_blank">
+          <Link href={"https://instagram.com/tehseen.01"} target="_blank">
             <Instagram />
           </Link>
-          <Link href={"#"} target="_blank">
+          <Link href={"https://twitter.com/tehseen_type"} target="_blank">
             <Twitter />
           </Link>
-          <Link href={"#"} target="_blank">
+          <Link
+            href={"https://www.linkedin.com/in/mohd-tehseen-962635271"}
+            target="_blank"
+          >
             <Linkedin />
           </Link>
         </div>

@@ -1,8 +1,11 @@
 "use client";
-import { setAllProducts, setProductLoading } from "@/redux/slice/productSlice";
+import {
+  setAllProducts,
+  setAllProductLoading,
+} from "@/redux/slice/productSlice";
 import { useQuery } from "@tanstack/react-query";
 import React, { useEffect } from "react";
-import { IAllProducts } from "./interface";
+import { IAllProducts } from "../interface";
 import axios from "axios";
 import { useAppDispatch } from "@/redux/hooks";
 
@@ -33,10 +36,10 @@ const useFetchProducts = (query: string) => {
 
   useEffect(() => {
     if (query) {
-      dispatch(setProductLoading(filterLoading));
+      dispatch(setAllProductLoading(filterLoading));
       dispatch(setAllProducts(filterData));
     } else {
-      dispatch(setProductLoading(isLoading));
+      dispatch(setAllProductLoading(isLoading));
       dispatch(setAllProducts(data));
     }
   }, [dispatch, data, query, filterData, filterLoading, isLoading]);

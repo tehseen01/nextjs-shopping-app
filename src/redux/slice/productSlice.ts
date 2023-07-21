@@ -1,8 +1,10 @@
-import { IAllProducts } from "@/lib/interface";
+import { IAllProducts, IProduct } from "@/lib/interface";
 import { createSlice } from "@reduxjs/toolkit";
 
 interface InitialState {
   allProducts: IAllProducts;
+  allProductLoading: boolean;
+  product: IProduct;
   productLoading: boolean;
 }
 
@@ -13,6 +15,25 @@ const initialState: InitialState = {
     totalProducts: 0,
     products: [],
   },
+  product: {
+    _id: "",
+    brand: "",
+    category: "",
+    description: "",
+    images: [],
+    price: 0,
+    thumbnail: "",
+    title: "",
+    colors: [],
+    discountPercentage: 0,
+    discountPrice: 0,
+    highlights: [],
+    rating: 0,
+    sizes: [],
+    stock: 0,
+    type: "",
+  },
+  allProductLoading: false,
   productLoading: false,
 };
 
@@ -24,11 +45,24 @@ const productSlice = createSlice({
       state.allProducts = action.payload;
     },
 
+    setAllProductLoading: (state, action) => {
+      state.allProductLoading = action.payload;
+    },
+
+    setProduct: (state, action) => {
+      state.product = action.payload;
+    },
+
     setProductLoading: (state, action) => {
       state.productLoading = action.payload;
     },
   },
 });
 
-export const { setAllProducts, setProductLoading } = productSlice.actions;
+export const {
+  setAllProducts,
+  setAllProductLoading,
+  setProduct,
+  setProductLoading,
+} = productSlice.actions;
 export default productSlice.reducer;

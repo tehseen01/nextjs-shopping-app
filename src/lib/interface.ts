@@ -11,6 +11,16 @@ export interface IBrand {
   label: string;
 }
 
+export interface IColor {
+  name: string;
+  hexCode: string;
+}
+
+export interface ISize {
+  name: string;
+  measurement: string;
+}
+
 export interface IProduct {
   _id: string;
   title: string;
@@ -24,8 +34,8 @@ export interface IProduct {
   category: string;
   thumbnail: string;
   images: string[];
-  colors?: (string | { name: string; hexCode: string })[];
-  sizes?: (string | { name: string; measurement: string })[];
+  colors?: IColor[];
+  sizes?: ISize[];
   highlights?: string[];
   discountPrice?: number;
 }

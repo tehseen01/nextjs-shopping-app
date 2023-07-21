@@ -22,16 +22,16 @@ const Header = () => {
               <Link href={"/store"}>Store</Link>
             </li>
             <li>
-              <Link href={"/store"}>Phones</Link>
+              <Link href={"/store/mobiles"}>Mobiles</Link>
             </li>
             <li>
-              <Link href={"#"}>TV & display</Link>
+              <Link href={"/store/tv"}>TV & display</Link>
             </li>
             <li>
-              <Link href={"#"}>Laptop & Tablets</Link>
+              <Link href={"/store/laptops"}>Laptop</Link>
             </li>
             <li>
-              <Link href={"#"}>Accessories</Link>
+              <Link href={"/store/accessories"}>Accessories</Link>
             </li>
           </ul>
 
