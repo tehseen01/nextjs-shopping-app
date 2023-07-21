@@ -2,12 +2,13 @@
 
 import Categories from "@/components/store/Categories";
 import Filters from "@/components/store/Filters";
-import useFetchProducts from "@/lib/useFetchProducts";
+import useFetchProducts from "@/lib/request/useFetchProducts";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import React from "react";
+import React, { Suspense } from "react";
 import { useParams } from "next/navigation";
 import useBrandCategory from "@/lib/request/useBrandCategory";
 import { setOpenFilter } from "@/redux/slice/filterSlice";
+import Loading from "../loading";
 
 const StoreLayout = ({ children }: { children: React.ReactNode }) => {
   const params = useParams();
@@ -33,17 +34,19 @@ const StoreLayout = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <main className="overflow-hidden">
-      {catData && <Categories data={catData} />}
-      <section className="grid lg:grid-cols-[300px_1fr] md:grid-cols-[250px_1fr] relative border-t">
-        {openFilter && (
-          <div
-            className="fixed inset-0 bg-black/60"
-            onClick={() => dispatch(setOpenFilter(false))}
-          ></div>
-        )}
-        {brandData && <Filters brandData={brandData} />}
-        {children}
-      </section>
+      <Suspense fallback={<Loading />}>
+        {catData && <Categories data={catData} />}
+        <section className="grid lg:grid-cols-[300px_1fr] md:grid-cols-[250px_1fr] relative border-t">
+          {openFilter && (
+            <div
+              className="fixed inset-0 bg-black/60"
+              onClick={() => dispatch(setOpenFilter(false))}
+            ></div>
+          )}
+          {brandData && <Filters brandData={brandData} />}
+          {children}
+        </section>
+      </Suspense>
     </main>
   );
 };

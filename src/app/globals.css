@@ -83,9 +83,14 @@
   }
 }
 
+.swiper:hover .swiper-button-prev,
+.swiper:hover .swiper-button-next {
+  @apply block;
+}
+
 .swiper-button-prev,
 .swiper-button-next {
-  @apply bg-black/90 rounded-md z-10 w-6 h-6 cursor-pointer hover:bg-black/70 absolute top-1/2  -translate-y-1/2;
+  @apply bg-black/90 rounded-md z-10 w-6 h-6 cursor-pointer hover:bg-black/70 absolute top-1/2 hidden -translate-y-1/2;
 }
 
 .swiper-button-next {

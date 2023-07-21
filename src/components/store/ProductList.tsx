@@ -5,16 +5,21 @@ import Cards from "../Card";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setOpenFilter } from "@/redux/slice/filterSlice";
 import { Filter } from "lucide-react";
+import Spinner from "../Spinner";
 
 const ProductList = () => {
   const dispatch = useAppDispatch();
 
-  const { allProducts, productLoading } = useAppSelector(
+  const { allProducts, allProductLoading } = useAppSelector(
     (state) => state.product
   );
 
-  if (productLoading) {
-    return <div>Loading...</div>;
+  if (allProductLoading) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <Spinner />
+      </div>
+    );
   }
 
   return (
@@ -28,12 +33,13 @@ const ProductList = () => {
         </button>
       )}
       <div className="grid xl:grid-cols-4 lg:grid-cols-3 grid-cols-2 sm:gap-4 gap-2">
-        {allProducts &&
+        {allProducts.products.length > 0 ? (
           allProducts?.products.map((product) => (
-            <Link key={product._id} href={`/${product._id}`}>
-              <Cards product={product} />
-            </Link>
-          ))}
+            <Cards product={product} key={product._id} />
+          ))
+        ) : (
+          <div>Sorry! There is no product related to your query.</div>
+        )}
       </div>
     </div>
   );
