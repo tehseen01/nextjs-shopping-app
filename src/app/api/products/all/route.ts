@@ -63,8 +63,12 @@ export async function GET(req: NextRequest) {
     }
 
     if (brand.length > 0) {
-      totalDocQuery = totalDocQuery.find({ brand: { $in: brand } });
-      query = query.find({ brand: { $in: brand } });
+      totalDocQuery = totalDocQuery.find({
+        brand: { $in: brand.map((item) => new RegExp(item, "i")) },
+      });
+      query = query.find({
+        brand: { $in: brand.map((item) => new RegExp(item, "i")) },
+      });
     }
 
     if (rating) {

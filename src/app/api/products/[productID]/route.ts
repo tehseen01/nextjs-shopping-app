@@ -1,5 +1,8 @@
+import connect from "@/helpers/db";
 import Product from "@/models/Product";
 import { NextRequest, NextResponse } from "next/server";
+
+connect();
 
 export async function GET(
   req: NextRequest,

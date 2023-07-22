@@ -6,45 +6,59 @@ import { priceFormat } from "@/lib/utils";
 import { Button } from "./ui/button";
 import useDeviceSize from "@/lib/useDeviceSize";
 import Link from "next/link";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { addToCart, setTotal } from "@/redux/slice/cartSlice";
 
 const Cards = ({ product }: { product: IProduct }) => {
   const { width } = useDeviceSize();
 
-  const addToCart = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const {
+    _id,
+    price,
+    title,
+    thumbnail,
+    discountPercentage,
+    rating,
+    discountPrice,
+  } = product;
+
+  const dispatch = useAppDispatch();
+
+  const addToCartHandle = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    console.log("hello world");
+
+    dispatch(addToCart({ _id, price, title, img: thumbnail, quantity: 1 }));
+    dispatch(setTotal());
   };
 
   return (
-    <Link href={`/${product._id}`}>
+    <Link href={`/${_id}`}>
       <Card className="rounded-none grid items-center h-full">
         <CardHeader className="bg-gray-50 aspect-1/85 items-center justify-center p-0">
           <figure className="h-full">
             <Image
-              src={product.thumbnail}
+              src={thumbnail}
               width={width < 400 ? 100 : 200}
               height={width < 400 ? 100 : 200}
-              alt={product.title}
+              alt={title}
               className="brightness-[0.98] w-full h-full object-scale-down p-6"
             />
           </figure>
         </CardHeader>
         <CardContent className="md:p-4 md:pb-0 p-2 pb-0">
           <p className="">
-            {product.title.length > 40
-              ? product.title.slice(0, 40) + "..."
-              : product.title}
+            {title.length > 40 ? title.slice(0, 40) + "..." : title}
           </p>
           <div className="flex items-center">
             <span className="text-[#f50514] text-sm flex-1">
-              {product.discountPercentage}% OFF
+              {discountPercentage}% OFF
             </span>
-            <span>{product.rating}</span>
+            <span>{rating}</span>
           </div>
           <div className="flex items-center py-2 gap-1">
-            <span className="font-medium">{priceFormat(product.price)}</span>
+            <span className="font-medium">{priceFormat(price)}</span>
             <del className="text-gray-500 text-xs">
-              {product.discountPrice && priceFormat(product.discountPrice)}
+              {discountPrice && priceFormat(discountPrice)}
             </del>
           </div>
         </CardContent>
@@ -52,7 +66,7 @@ const Cards = ({ product }: { product: IProduct }) => {
           <Button
             className="border w-full h-10 rounded-none"
             onClick={(e) => {
-              addToCart(e);
+              addToCartHandle(e);
             }}
           >
             Add to Cart

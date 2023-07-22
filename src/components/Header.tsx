@@ -1,47 +1,51 @@
 "use client";
 
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { setTotal } from "@/redux/slice/cartSlice";
 import clsx from "clsx";
 import { ChevronRight, Menu, Search, ShoppingBag, User, X } from "lucide-react";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const Header = () => {
   const [openMenu, setOpenMenu] = useState(false);
+
+  const dispatch = useAppDispatch();
+  const { totalQuantity } = useAppSelector((state) => state.cart);
+
+  useEffect(() => {
+    dispatch(setTotal());
+  }, [dispatch]);
 
   return (
     <>
       <header className="border-b stick">
         <nav className="flex items-center gap-8 w-[95%] m-auto h-12">
           <div className="font-medium text-lg">
-            <Link href={"/"}>Shop.io</Link>
+            <Link href={"/"}>dev.shopp</Link>
           </div>
 
           <div className="md:hidden flex-1"></div>
           <ul className="md:flex hidden items-center gap-4 flex-1">
-            <li>
-              <Link href={"/store"}>Store</Link>
-            </li>
-            <li>
-              <Link href={"/store/mobiles"}>Mobiles</Link>
-            </li>
-            <li>
-              <Link href={"/store/tv"}>TV & display</Link>
-            </li>
-            <li>
-              <Link href={"/store/laptops"}>Laptop</Link>
-            </li>
-            <li>
-              <Link href={"/store/accessories"}>Accessories</Link>
-            </li>
+            {links.map((elm) => (
+              <li key={elm.id}>
+                <Link href={elm.path}>{elm.name}</Link>
+              </li>
+            ))}
           </ul>
 
           <div className="flex items-center gap-4">
             <button title="Search">
               <Search strokeWidth={1.25} />
             </button>
-            <button title="Cart">
+            <Link href={"/cart"} title="Cart" className="relative">
               <ShoppingBag strokeWidth={1.25} />
-            </button>
+              {totalQuantity > 0 && (
+                <div className="absolute top-[-5px] right-[-7px] bg-red-400 text-white w-5 h-5 rounded-full text-sm flex items-center justify-center">
+                  {totalQuantity}
+                </div>
+              )}
+            </Link>
             <button className="max-md:hidden" title="Profile">
               <User strokeWidth={1.25} />
             </button>
@@ -89,45 +93,16 @@ const Header = () => {
           </Link>
 
           <div className="py-4 grid gap-1">
-            <Link
-              className="hover:bg-gray-100 py-2 px-1 font-medium"
-              href={"/store"}
-              onClick={() => setOpenMenu(!openMenu)}
-            >
-              Store
-            </Link>
-
-            <Link
-              className="hover:bg-gray-100 py-2 px-1 font-medium"
-              href={"/store"}
-              onClick={() => setOpenMenu(!openMenu)}
-            >
-              Phones
-            </Link>
-
-            <Link
-              className="hover:bg-gray-100 py-2 px-1 font-medium"
-              href={"#"}
-              onClick={() => setOpenMenu(!openMenu)}
-            >
-              TV & display
-            </Link>
-
-            <Link
-              className="hover:bg-gray-100 py-2 px-1 font-medium"
-              href={"#"}
-              onClick={() => setOpenMenu(!openMenu)}
-            >
-              Laptop & Tablets
-            </Link>
-
-            <Link
-              className="hover:bg-gray-100 py-2 px-1 font-medium"
-              href={"/"}
-              onClick={() => setOpenMenu(!openMenu)}
-            >
-              Accessories
-            </Link>
+            {links.map((elm) => (
+              <Link
+                key={elm.id}
+                className="hover:bg-gray-100 py-2 px-1 font-medium"
+                href={elm.path}
+                onClick={() => setOpenMenu(!openMenu)}
+              >
+                {elm.name}
+              </Link>
+            ))}
           </div>
 
           <div className="grid border-t pt-4">
@@ -162,3 +137,31 @@ const Header = () => {
 };
 
 export default Header;
+
+const links = [
+  {
+    id: 1,
+    path: "/store",
+    name: "Store",
+  },
+  {
+    id: 2,
+    path: "/store/mobiles",
+    name: "Mobiles",
+  },
+  {
+    id: 3,
+    path: "/store/tv",
+    name: "TV & display",
+  },
+  {
+    id: 4,
+    path: "/store/laptop",
+    name: "Laptop",
+  },
+  {
+    id: 5,
+    path: "/store/accessories",
+    name: "Accessories",
+  },
+];

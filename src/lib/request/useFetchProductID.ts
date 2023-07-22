@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import React, { useEffect } from "react";
 
-const useProductID = ({ id }: { id: string }) => {
+const useFetchProductID = ({ id }: { id: string }) => {
   const dispatch = useAppDispatch();
 
   const { data, isLoading } = useQuery(["product", id], {
@@ -22,4 +22,4 @@ const useProductID = ({ id }: { id: string }) => {
   return data;
 };
 
-export default useProductID;
+export default useFetchProductID;
