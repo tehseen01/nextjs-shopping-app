@@ -2,16 +2,33 @@
 import Spinner from "@/components/Spinner";
 import ProductImgSlider from "@/components/product/ProductImgSlider";
 import { Button } from "@/components/ui/button";
-import useProductID from "@/lib/request/useProductID";
+import useFetchProductID from "@/lib/request/useFetchProductID";
 import { priceFormat } from "@/lib/utils";
-import { useAppSelector } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { addToCart, setTotal } from "@/redux/slice/cartSlice";
 import { Star, StarHalf } from "lucide-react";
 import React from "react";
 
 const Page = ({ params }: { params: { id: string } }) => {
-  useProductID({ id: params.id });
+  useFetchProductID({ id: params.id });
+
+  const dispatch = useAppDispatch();
 
   const { product, productLoading } = useAppSelector((state) => state.product);
+
+  const addCartHandle = () => {
+    dispatch(
+      addToCart({
+        _id: product._id,
+        title: product.title,
+        quantity: 1,
+        price: product.price,
+        img: product.thumbnail,
+      })
+    );
+
+    dispatch(setTotal());
+  };
 
   if (productLoading) {
     return (
@@ -101,7 +118,11 @@ const Page = ({ params }: { params: { id: string } }) => {
 
           {/* -----ADD TO CART & BUY NOW----- */}
           <div className="fixed inset-x-0 bottom-0 h-[72px] p-2 bg-white border border-t flex items-center md:justify-end justify-center gap-4 md:pr-32 sm:pr-12">
-            <Button className="rounded-none max-sm:flex-1 w-48 " size={"lg"}>
+            <Button
+              className="rounded-none max-sm:flex-1 w-48 "
+              size={"lg"}
+              onClick={addCartHandle}
+            >
               Add to Cart
             </Button>
             <Button
