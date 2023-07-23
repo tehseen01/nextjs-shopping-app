@@ -12,6 +12,9 @@ interface InitialState {
   cart: Cart[];
   totalPrice: number;
   totalQuantity: number;
+  editCartMode: boolean;
+  selectCart: string[];
+  selectAll: boolean;
 }
 
 const localStorageCart = () => {
@@ -31,6 +34,9 @@ const initialState: InitialState = {
   cart: localStorageCart(),
   totalPrice: 0,
   totalQuantity: 0,
+  editCartMode: false,
+  selectCart: [],
+  selectAll: false,
 };
 
 const cartSlice = createSlice({
@@ -52,7 +58,7 @@ const cartSlice = createSlice({
       const { totalPrice, totalQuantity } = state.cart.reduce(
         (accumulator, currentValue) => {
           let { price, quantity } = currentValue;
-          accumulator.totalPrice = price * quantity;
+          accumulator.totalPrice += price * quantity;
           accumulator.totalQuantity += quantity;
 
           return accumulator;
@@ -72,6 +78,42 @@ const cartSlice = createSlice({
       state.cart = updateCart;
 
       localStorage.setItem("myCart", JSON.stringify(state.cart));
+    },
+
+    handleEditCartMode: (state, action) => {
+      state.editCartMode = action.payload;
+    },
+
+    handleSelectCart: (state, action) => {
+      let { id, cartLength } = action.payload;
+      let index = state.selectCart.indexOf(id);
+
+      index > -1
+        ? state.selectCart.splice(index, 1)
+        : state.selectCart.push(id);
+
+      state.selectAll = state.selectCart.length === cartLength;
+    },
+
+    handleSelectAll: (state, action) => {
+      let match = action.payload;
+      const compareFn = (a: string[], b: []) =>
+        a.length === b.length && a.every((elm, index) => elm === b[index]);
+
+      state.selectCart = compareFn(state.selectCart, match) ? [] : match;
+
+      state.selectAll = !state.selectAll;
+    },
+
+    removeSelectedCart: (state) => {
+      const filteredCart = state.cart.filter(
+        (cart) => !state.selectCart.includes(cart._id)
+      );
+
+      state.cart = filteredCart;
+      localStorage.setItem("myCart", JSON.stringify(state.cart));
+
+      state.selectCart = [];
     },
 
     incItem: (state, action) => {
@@ -124,6 +166,15 @@ const cartSlice = createSlice({
   },
 });
 
-export const { addToCart, setTotal, removeCart, incItem, decItem } =
-  cartSlice.actions;
+export const {
+  addToCart,
+  setTotal,
+  removeCart,
+  incItem,
+  decItem,
+  handleEditCartMode,
+  handleSelectCart,
+  handleSelectAll,
+  removeSelectedCart,
+} = cartSlice.actions;
 export default cartSlice.reducer;
