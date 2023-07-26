@@ -1,12 +1,5 @@
+import { Cart } from "@/lib/interface";
 import { createSlice } from "@reduxjs/toolkit";
-
-interface Cart {
-  _id: string;
-  title: string;
-  price: number;
-  quantity: number;
-  img: string;
-}
 
 interface InitialState {
   cart: Cart[];

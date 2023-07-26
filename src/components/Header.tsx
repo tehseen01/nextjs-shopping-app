@@ -6,12 +6,26 @@ import clsx from "clsx";
 import { ChevronRight, Menu, Search, ShoppingBag, User, X } from "lucide-react";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { Button } from "./ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { signOut } from "firebase/auth";
+import { auth } from "@/lib/firebase";
+import { setAuthStatus } from "@/redux/slice/userSlice";
 
 const Header = () => {
   const [openMenu, setOpenMenu] = useState(false);
 
   const dispatch = useAppDispatch();
   const { totalQuantity } = useAppSelector((state) => state.cart);
+  const { authStatus, user } = useAppSelector((state) => state.user);
 
   useEffect(() => {
     dispatch(setTotal());
@@ -46,9 +60,37 @@ const Header = () => {
                 </div>
               )}
             </Link>
-            <button className="max-md:hidden" title="Profile">
-              <User strokeWidth={1.25} />
-            </button>
+            {authStatus ? (
+              <>
+                <DropdownMenu>
+                  <DropdownMenuTrigger>
+                    <Avatar className="max-md:hidden">
+                      <AvatarImage src={user?.avatar} alt={user?.name} />
+                      <AvatarFallback className="font-semibold text-lg">
+                        {user?.name.charAt(0).toUpperCase()}
+                      </AvatarFallback>
+                    </Avatar>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>Orders</DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={() => {
+                        signOut(auth), dispatch(setAuthStatus(false));
+                      }}
+                      className="cursor-pointer"
+                    >
+                      Sign out
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </>
+            ) : (
+              <Link href={"/signin"} className="max-md:hidden" title="Profile">
+                <User strokeWidth={1.25} />
+              </Link>
+            )}
             <button
               className="md:hidden inline-block"
               onClick={() => setOpenMenu(!openMenu)}
@@ -77,20 +119,48 @@ const Header = () => {
         </div>
 
         <div className="px-4">
-          <Link
-            href={"/"}
-            className="flex items-center py-2 mt-3 border-b hover:bg-gray-100"
-          >
-            <div className="flex-1 flex items-center">
-              <div className="rounded-lg bg-gray-100 p-2 mr-2">
-                <User strokeWidth={1.25} size={20} />
+          {authStatus ? (
+            <div className="border-b pb-2 grid gap-2 ">
+              <div className="flex items-center gap-4">
+                <Avatar>
+                  <AvatarImage src={user?.avatar} alt={user?.name} />
+                  <AvatarFallback className="font-semibold text-lg capitalize">
+                    {user?.name.charAt(0)}
+                  </AvatarFallback>
+                </Avatar>
+
+                <h3 className="capitalize text-xl font-medium">{user?.name}</h3>
               </div>
-              <span className="text-sm">Sign In / Sign Up</span>
+              <Button variant={"ghost"} className="justify-start px-0">
+                <Link href={"/orders"}>Orders</Link>
+              </Button>
+
+              <Button
+                variant={"ghost"}
+                className="justify-start px-0"
+                onClick={() => {
+                  signOut(auth), dispatch(setAuthStatus(false));
+                }}
+              >
+                Sign Out
+              </Button>
             </div>
-            <div>
-              <ChevronRight strokeWidth={1.25} />
-            </div>
-          </Link>
+          ) : (
+            <Link
+              href={"/signin"}
+              className="flex items-center py-2 mt-3 border-b hover:bg-gray-100"
+            >
+              <div className="flex-1 flex items-center">
+                <div className="rounded-lg bg-gray-100 p-2 mr-2">
+                  <User strokeWidth={1.25} size={20} />
+                </div>
+                <span className="text-sm">Sign In / Sign Up</span>
+              </div>
+              <div>
+                <ChevronRight strokeWidth={1.25} />
+              </div>
+            </Link>
+          )}
 
           <div className="py-4 grid gap-1">
             {links.map((elm) => (

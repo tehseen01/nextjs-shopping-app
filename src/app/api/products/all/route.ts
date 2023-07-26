@@ -9,8 +9,6 @@ export async function POST(request: NextRequest) {
   try {
     const reqBody = await request.json();
 
-    console.log(reqBody);
-
     //check if product already exists
     const product = await Product.findOne({ title: reqBody.title });
 
