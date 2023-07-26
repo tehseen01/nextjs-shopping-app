@@ -64,12 +64,14 @@ const Header = () => {
               <>
                 <DropdownMenu>
                   <DropdownMenuTrigger>
-                    <Avatar className="max-md:hidden">
-                      <AvatarImage src={user?.avatar} alt={user?.name} />
-                      <AvatarFallback className="font-semibold text-lg">
-                        {user?.name.charAt(0).toUpperCase()}
-                      </AvatarFallback>
-                    </Avatar>
+                    {user && (
+                      <Avatar className="max-md:hidden">
+                        <AvatarImage src={user?.avatar} alt={user?.name} />
+                        <AvatarFallback className="font-semibold text-lg uppercase">
+                          {user?.name?.charAt(0)}
+                        </AvatarFallback>
+                      </Avatar>
+                    )}
                   </DropdownMenuTrigger>
                   <DropdownMenuContent>
                     <DropdownMenuLabel>My Account</DropdownMenuLabel>
@@ -122,13 +124,14 @@ const Header = () => {
           {authStatus ? (
             <div className="border-b pb-2 grid gap-2 ">
               <div className="flex items-center gap-4">
-                <Avatar>
-                  <AvatarImage src={user?.avatar} alt={user?.name} />
-                  <AvatarFallback className="font-semibold text-lg capitalize">
-                    {user?.name.charAt(0)}
-                  </AvatarFallback>
-                </Avatar>
-
+                {user && (
+                  <Avatar>
+                    <AvatarImage src={user?.avatar} alt={user?.name} />
+                    <AvatarFallback className="font-semibold text-lg capitalize">
+                      {user?.name?.charAt(0)}
+                    </AvatarFallback>
+                  </Avatar>
+                )}
                 <h3 className="capitalize text-xl font-medium">{user?.name}</h3>
               </div>
               <Button variant={"ghost"} className="justify-start px-0">
