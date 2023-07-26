@@ -14,6 +14,7 @@ import {
   removeSelectedCart,
   setTotal,
 } from "@/redux/slice/cartSlice";
+import axios from "axios";
 import { Plus, X } from "lucide-react";
 import { Minus } from "lucide-react";
 import Image from "next/image";
@@ -31,6 +32,18 @@ const Page = () => {
     selectCart,
     selectAll,
   } = useAppSelector((state) => state.cart);
+
+  const handleCheckout = async () => {
+    try {
+      const { data } = await axios.post("/api/payment", {
+        cart,
+      });
+
+      window.location.assign(data.url);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     dispatch(setTotal());
@@ -169,7 +182,11 @@ const Page = () => {
           ) : (
             <div className="fixed bottom-0 inset-x-0 px-8 h-[72px] bg-white flex gap-8 items-center justify-end">
               <p className="font-medium text-xl">{priceFormat(totalPrice)}</p>
-              <Button size={"lg"} className="rounded-none ">
+              <Button
+                size={"lg"}
+                className="rounded-none "
+                onClick={handleCheckout}
+              >
                 Checkout
               </Button>
             </div>
