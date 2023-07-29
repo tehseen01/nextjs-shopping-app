@@ -53,6 +53,7 @@ export interface Cart {
   price: number;
   quantity: number;
   img: string;
+  userID?: string;
 }
 
 export interface IUser {
@@ -60,7 +61,4 @@ export interface IUser {
   name: string;
   email: string;
   avatar: string;
-  role: string;
-  createdAt: Date;
-  updatedAt: Date;
 }

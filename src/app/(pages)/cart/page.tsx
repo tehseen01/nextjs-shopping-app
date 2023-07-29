@@ -18,10 +18,12 @@ import axios from "axios";
 import { Plus, X } from "lucide-react";
 import { Minus } from "lucide-react";
 import Image from "next/image";
-import React, { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import React, { useEffect, useId } from "react";
 
 const Page = () => {
   const { width } = useDeviceSize();
+  const router = useRouter();
 
   const dispatch = useAppDispatch();
   const {
@@ -32,14 +34,29 @@ const Page = () => {
     selectCart,
     selectAll,
   } = useAppSelector((state) => state.cart);
+  const { authStatus } = useAppSelector((state) => state.user);
 
   const handleCheckout = async () => {
     try {
-      const { data } = await axios.post("/api/payment", {
-        cart,
-      });
+      if (authStatus) {
+        const { data } = await axios.post("/api/payment", {
+          cart,
+        });
 
-      window.location.assign(data.url);
+        localStorage.setItem(
+          "order",
+          JSON.stringify({
+            items: cart,
+            totalQuantity,
+            totalPrice,
+          })
+        );
+        localStorage.removeItem("myCart");
+
+        router.push(data.url);
+      } else {
+        router.push("/signin");
+      }
     } catch (error) {
       console.log(error);
     }

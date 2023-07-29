@@ -6,7 +6,6 @@ import useFetchProducts from "@/lib/request/useFetchProducts";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import React, { Suspense } from "react";
 import { useParams } from "next/navigation";
-import useBrandCategory from "@/lib/request/useBrandCategory";
 import { setOpenFilter } from "@/redux/slice/filterSlice";
 import Loading from "../loading";
 
@@ -30,12 +29,11 @@ const StoreLayout = ({ children }: { children: React.ReactNode }) => {
   const offerFilter = offer !== "" ? `&discountPercentage=${offer}` : "";
 
   useFetchProducts(`${brandFilter}${catFilter}${ratingFilter}${offerFilter}`);
-  const { brandData, catData } = useBrandCategory();
 
   return (
     <main className="overflow-hidden">
       <Suspense fallback={<Loading />}>
-        {catData && <Categories data={catData} />}
+        <Categories />
         <section className="grid lg:grid-cols-[300px_1fr] md:grid-cols-[250px_1fr] relative border-t">
           {openFilter && (
             <div
@@ -43,7 +41,7 @@ const StoreLayout = ({ children }: { children: React.ReactNode }) => {
               onClick={() => dispatch(setOpenFilter(false))}
             ></div>
           )}
-          {brandData && <Filters brandData={brandData} />}
+          <Filters />
           {children}
         </section>
       </Suspense>

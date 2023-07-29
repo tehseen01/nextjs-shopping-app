@@ -2,11 +2,15 @@
 
 import SignIn from "@/components/auth/SignIn";
 import { Button } from "@/components/ui/button";
+import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 const Page = () => {
+  const router = useRouter();
+
   return (
     <main className="grid grid-cols-1 md:grid-cols-2 h-[100dvh]">
       <section className="grid justify-center content-center">
@@ -49,7 +53,16 @@ const Page = () => {
           <SignIn />
         </div>
       </section>
-      <section className="max-md:hidden">
+      <section className="max-md:hidden relative">
+        <Button
+          title="Go Back"
+          onClick={() => router.back()}
+          size={"icon"}
+          className="absolute top-4 left-4 max-md:hidden"
+          variant={"ghost"}
+        >
+          <ArrowLeft />
+        </Button>
         <figure className="h-full">
           <Image
             src={
