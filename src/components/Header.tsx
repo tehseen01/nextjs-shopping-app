@@ -76,7 +76,9 @@ const Header = () => {
                   <DropdownMenuContent>
                     <DropdownMenuLabel>My Account</DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem>Orders</DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <Link href={"/orders"}>Orders</Link>
+                    </DropdownMenuItem>
                     <DropdownMenuItem
                       onClick={() => {
                         signOut(auth), dispatch(setAuthStatus(false));
@@ -135,7 +137,9 @@ const Header = () => {
                 <h3 className="capitalize text-xl font-medium">{user?.name}</h3>
               </div>
               <Button variant={"ghost"} className="justify-start px-0">
-                <Link href={"/orders"}>Orders</Link>
+                <Link href={"/orders"} onClick={() => setOpenMenu(!openMenu)}>
+                  Orders
+                </Link>
               </Button>
 
               <Button

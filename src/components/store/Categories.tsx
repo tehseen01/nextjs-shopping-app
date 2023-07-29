@@ -1,6 +1,5 @@
 "use client";
 
-import { ICategory } from "@/lib/interface";
 import useDeviceSize from "@/lib/useDeviceSize";
 import clsx from "clsx";
 import Image from "next/image";
@@ -10,7 +9,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 import "swiper/css";
 
-const Categories = ({ data }: { data: ICategory[] }) => {
+const Categories = () => {
   const [activeTab, setActiveTab] = useState(0);
 
   const { width } = useDeviceSize();
@@ -38,17 +37,24 @@ const Categories = ({ data }: { data: ICategory[] }) => {
   return (
     <section className="pt-2">
       <Swiper slidesPerView={size} spaceBetween={10} className=" w-full">
-        {data.map((cat, index) => (
-          <SwiperSlide key={cat._id}>
+        {categories.map((category, index) => (
+          <SwiperSlide key={category._id}>
             <Link
-              href={`/store/${cat.value.toLowerCase()}`}
+              href={`/store/${category.value.toLowerCase()}`}
               className="grid justify-items-center pb-4 relative link-hover"
               onClick={() => setActiveTab(index)}
             >
               <figure>
-                <Image src={cat.icon} width={60} height={60} alt={cat.value} />
+                <Image
+                  src={category.icon}
+                  width={60}
+                  height={60}
+                  alt={category.value}
+                />
               </figure>
-              <span className="text-sm whitespace-nowrap">{cat.value}</span>
+              <span className="text-sm whitespace-nowrap">
+                {category.value}
+              </span>
               <div
                 className={clsx(
                   activeTab === index ? "w-full" : "",
@@ -64,3 +70,42 @@ const Categories = ({ data }: { data: ICategory[] }) => {
 };
 
 export default Categories;
+
+const categories = [
+  {
+    _id: "64aff184478b0249323b175d",
+    label: "All",
+    value: "All",
+    icon: "https://res.cloudinary.com/dayo1mpv0/image/upload/v1689255007/ecom/hardware_qwn4oo.png",
+  },
+  {
+    _id: "64aff204478b0249323b1761",
+    label: "Mobiles",
+    value: "Mobiles",
+    icon: "https://res.cloudinary.com/dayo1mpv0/image/upload/v1689255007/ecom/communication_i7nnnm.png",
+  },
+  {
+    _id: "64aff270478b0249323b1764",
+    label: "Laptops",
+    value: "Laptops",
+    icon: "https://res.cloudinary.com/dayo1mpv0/image/upload/v1689255007/ecom/notebook-computer_zpw7iv.png",
+  },
+  {
+    _id: "64aff368478b0249323b1768",
+    label: "Accessories",
+    value: "Accessories",
+    icon: "https://res.cloudinary.com/dayo1mpv0/image/upload/v1689255008/ecom/earphones_tb48kt.png",
+  },
+  {
+    _id: "64aff420478b0249323b176b",
+    label: "Smart watches",
+    value: "Smart watches",
+    icon: "https://res.cloudinary.com/dayo1mpv0/image/upload/v1689255007/ecom/smart-watch_qqlxpr.png",
+  },
+  {
+    _id: "64b6865624cf32db35118af8",
+    label: "TV & Display",
+    value: "TV & Display",
+    icon: "https://res.cloudinary.com/dayo1mpv0/image/upload/v1689255007/ecom/smart-tv_cb19bi.png",
+  },
+];

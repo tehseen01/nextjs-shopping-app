@@ -6,7 +6,6 @@ import React, { Suspense, useEffect } from "react";
 import Loading from "./loading";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/lib/firebase";
-import axios from "axios";
 import { useAppDispatch } from "@/redux/hooks";
 import { setAuthStatus, setUser } from "@/redux/slice/userSlice";
 
@@ -16,12 +15,15 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     const unSub = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        const { data } = await axios.get("/api/user", {
-          params: { email: user.email },
-        });
-
         dispatch(setAuthStatus(true));
-        dispatch(setUser(data.user));
+        dispatch(
+          setUser({
+            _id: user.uid,
+            name: user.displayName,
+            avatar: user.photoURL,
+            email: user.email,
+          })
+        );
       }
     });
 

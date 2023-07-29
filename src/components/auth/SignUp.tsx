@@ -9,7 +9,6 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "@/lib/firebase";
-import axios from "axios";
 import { useToast } from "../ui/use-toast";
 import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/redux/hooks";
@@ -32,18 +31,6 @@ const SignUp = () => {
 
   const onSubmit: SubmitHandler<SignUpFormData> = async (data) => {
     try {
-      const { data: userData } = await axios.get(`/api/user`, {
-        params: { email: data.email },
-      });
-
-      if (userData.user !== null) {
-        return toast({
-          title: "This email already in use",
-          description: "Please login or try different email !",
-          variant: "destructive",
-        });
-      }
-
       const res = await createUserWithEmailAndPassword(
         auth,
         data.email,
@@ -54,20 +41,24 @@ const SignUp = () => {
         displayName: data.name,
       });
 
-      const { data: userPostData } = await axios.post("/api/user", {
-        email: res.user.email,
-        name: res.user.displayName,
-        avatar: res.user.photoURL,
-      });
-
       dispatch(setAuthStatus(true));
-      dispatch(setUser(userPostData.user));
-      console.log(userPostData);
+      dispatch(
+        setUser({
+          _id: res.user.uid,
+          name: res.user.displayName,
+          email: res.user.email,
+          avatar: res.user.photoURL,
+        })
+      );
       reset();
 
       router.push("/");
-    } catch (err) {
+    } catch (err: any) {
       console.log(err);
+      return toast({
+        title: err.message,
+        variant: "destructive",
+      });
     }
   };
 

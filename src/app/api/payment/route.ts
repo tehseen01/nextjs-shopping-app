@@ -1,5 +1,4 @@
 import { Cart } from "@/lib/interface";
-import Product from "@/models/Product";
 import { NextResponse, NextRequest } from "next/server";
 import Stripe from "stripe";
 
@@ -16,7 +15,7 @@ const corsHeaders = {
 
 export async function POST(req: NextRequest) {
   const { cart } = await req.json();
-  // const { _id, quantity } = data;
+
   try {
     const line_items: Stripe.Checkout.SessionCreateParams.LineItem[] = [];
 
@@ -40,7 +39,6 @@ export async function POST(req: NextRequest) {
       cancel_url: `${process.env.PAYMENT_URL}/orders?canceled=true`,
     });
 
-    // NextResponse.redirect();
     return NextResponse.json(
       { url: session.url },
       {

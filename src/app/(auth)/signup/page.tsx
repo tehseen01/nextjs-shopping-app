@@ -5,11 +5,24 @@ import React from "react";
 import Image from "next/image";
 import SignUp from "@/components/auth/SignUp";
 import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const Page = () => {
+  const router = useRouter();
+
   return (
     <main className="grid grid-cols-1 md:grid-cols-2 h-[100dvh]">
-      <section className="max-md:hidden">
+      <section className="max-md:hidden relative">
+        <Button
+          title="Go back"
+          onClick={() => router.back()}
+          size={"icon"}
+          variant={"ghost"}
+          className="absolute top-4 left-4 max-md:hidden"
+        >
+          <ArrowLeft />
+        </Button>
         <figure className="h-full">
           <Image
             src={

@@ -17,7 +17,7 @@ import useDeviceSize from "@/lib/useDeviceSize";
 import { Star, X } from "lucide-react";
 import { Toggle } from "../ui/toggle";
 
-const Filters = ({ brandData }: { brandData: IBrand[] }) => {
+const Filters = () => {
   const dispatch = useAppDispatch();
   const { width } = useDeviceSize();
 
@@ -77,7 +77,7 @@ const Filters = ({ brandData }: { brandData: IBrand[] }) => {
         <div>
           <h3 className="font-medium mb-4">Brands</h3>
           <div>
-            {brandData.map((brand) => (
+            {brands.map((brand) => (
               <div key={brand._id} className="flex items-center gap-4">
                 <input
                   type="checkbox"
@@ -162,5 +162,50 @@ const sortBy = [
     field: "price",
     order: "desc",
     label: "Price(High to Low)",
+  },
+];
+
+const brands = [
+  {
+    _id: "64b11d92d8bcaa5798a67e48",
+    label: "Xiaomi",
+    value: "Xiaomi",
+    icon: "https://res.cloudinary.com/dayo1mpv0/image/upload/v1689329009/ecom/brands/xiaomi_fqal8m.png",
+    __v: 0,
+  },
+  {
+    _id: "64b11dd4d8bcaa5798a67e4b",
+    label: "Samsung",
+    value: "Samsung",
+    icon: "https://res.cloudinary.com/dayo1mpv0/image/upload/v1689329010/ecom/brands/samsung_1_stpivj.png",
+    __v: 0,
+  },
+  {
+    _id: "64b11e3bd8bcaa5798a67e4e",
+    label: "OnePlus",
+    value: "OnePlus",
+    icon: "https://res.cloudinary.com/dayo1mpv0/image/upload/v1689329010/ecom/brands/one-plus_i3qqjc.png",
+    __v: 0,
+  },
+  {
+    _id: "64b11e5ed8bcaa5798a67e51",
+    label: "Dell",
+    value: "Dell",
+    icon: "https://res.cloudinary.com/dayo1mpv0/image/upload/v1689329010/ecom/brands/dell_q5kmif.png",
+    __v: 0,
+  },
+  {
+    _id: "64b12301b2c9cda6b0dec0e2",
+    label: "Apple",
+    value: "Apple",
+    icon: "https://res.cloudinary.com/dayo1mpv0/image/upload/v1689329010/ecom/brands/apple-logo_pehtlu.png",
+    __v: 0,
+  },
+  {
+    _id: "64ba715e9a61845ba6b4f5a8",
+    label: "Realme",
+    value: "realme",
+    icon: "https://res.cloudinary.com/dayo1mpv0/image/upload/v1689940283/ecom/brands/Realme_qn5kpe.png",
+    __v: 0,
   },
 ];

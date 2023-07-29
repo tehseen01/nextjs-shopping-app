@@ -8,9 +8,11 @@ import useDeviceSize from "@/lib/useDeviceSize";
 import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { addToCart, setTotal } from "@/redux/slice/cartSlice";
+import { useToast } from "./ui/use-toast";
 
 const Cards = ({ product }: { product: IProduct }) => {
   const { width } = useDeviceSize();
+  const { toast } = useToast();
 
   const {
     _id,
@@ -29,6 +31,8 @@ const Cards = ({ product }: { product: IProduct }) => {
 
     dispatch(addToCart({ _id, price, title, img: thumbnail, quantity: 1 }));
     dispatch(setTotal());
+
+    toast({ title: "Product added in cart" });
   };
 
   return (

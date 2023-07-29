@@ -11,10 +11,11 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import { useAppDispatch } from "@/redux/hooks";
 import { setAuthStatus, setUser } from "@/redux/slice/userSlice";
-import axios from "axios";
 import { useRouter } from "next/navigation";
+import { useToast } from "../ui/use-toast";
 
 const SignIn = () => {
+  const { toast } = useToast();
   const router = useRouter();
   const dispatch = useAppDispatch();
 
@@ -35,17 +36,24 @@ const SignIn = () => {
         data.password
       );
 
-      const { data: userData } = await axios.get(`/api/user`, {
-        params: { email: user.email },
-      });
-
       dispatch(setAuthStatus(true));
-      dispatch(setUser(userData));
+      dispatch(
+        setUser({
+          _id: user.uid,
+          email: user.email,
+          name: user.displayName,
+          avatar: user.photoURL,
+        })
+      );
 
       router.push("/");
       reset();
-    } catch (err) {
+    } catch (err: any) {
       console.log(err);
+      return toast({
+        title: err.message,
+        variant: "destructive",
+      });
     }
   };
 
