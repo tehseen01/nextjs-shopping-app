@@ -21,9 +21,13 @@ const Filters = () => {
   const dispatch = useAppDispatch();
   const { width } = useDeviceSize();
 
-  const { openFilter, sort, rating, offer } = useAppSelector(
-    (state) => state.filter
-  );
+  const {
+    openFilter,
+    sort,
+    rating,
+    offer,
+    brand: brandState,
+  } = useAppSelector((state) => state.filter);
 
   const handleBrand = (e: ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value;
@@ -84,6 +88,7 @@ const Filters = () => {
                   id={brand.value}
                   value={brand.value}
                   onChange={handleBrand}
+                  checked={brandState.includes(brand.value)}
                 />
                 <label htmlFor={brand.label}>{brand.label}</label>
               </div>
