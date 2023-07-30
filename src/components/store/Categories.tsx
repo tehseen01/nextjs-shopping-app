@@ -108,4 +108,10 @@ const categories = [
     value: "TV & Display",
     icon: "https://res.cloudinary.com/dayo1mpv0/image/upload/v1689255007/ecom/smart-tv_cb19bi.png",
   },
+  {
+    _id: "64c5e5580c06622dfd4f94db",
+    label: "Tablet",
+    value: "Tablet",
+    icon: "https://res.cloudinary.com/dayo1mpv0/image/upload/v1690690818/ecom/tablet_inlinb.png",
+  },
 ];

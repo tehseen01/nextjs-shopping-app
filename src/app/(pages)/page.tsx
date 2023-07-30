@@ -1,5 +1,6 @@
 import Slider from "@/components/Slider";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -7,7 +8,11 @@ export default function Home() {
       <Slider />
       <section className="grid grid-cols-2 gap-3 my-8 w-[95vw] mx-auto">
         {homeProduct.map((item) => (
-          <div className=" shadow-lg hover:shadow-xl" key={item.id}>
+          <Link
+            href={`/${item.id}`}
+            className=" shadow-lg hover:shadow-xl"
+            key={item.id}
+          >
             <div className="md:h-[400px] max-md:aspect-square overflow-hidden">
               <Image
                 src={item.image}
@@ -17,7 +22,7 @@ export default function Home() {
                 className="h-full w-full object-cover hover:scale-105 transition-transform"
               />
             </div>
-          </div>
+          </Link>
         ))}
       </section>
     </main>
@@ -26,22 +31,22 @@ export default function Home() {
 
 const homeProduct = [
   {
-    id: 1,
+    id: "64c5dc0a0c06622dfd4f94d6",
     image:
       "https://res.cloudinary.com/dayo1mpv0/image/upload/v1689935898/ecom/slider/mi-tv_xzbqid.webp",
   },
   {
-    id: 2,
+    id: "64c5dfdb0c06622dfd4f94d8",
     image:
       "https://res.cloudinary.com/dayo1mpv0/image/upload/v1689935884/ecom/slider/realme-watch_vljtrt.webp",
   },
   {
-    id: 3,
+    id: "64c5e1090c06622dfd4f94d9",
     image:
       "https://res.cloudinary.com/dayo1mpv0/image/upload/v1689936015/ecom/slider/realme-11-pro_s8oaq4.webp",
   },
   {
-    id: 4,
+    id: "64c5dde60c06622dfd4f94d7",
     image:
       "https://res.cloudinary.com/dayo1mpv0/image/upload/v1689935886/ecom/slider/mi-tab_s3wkhz.webp",
   },

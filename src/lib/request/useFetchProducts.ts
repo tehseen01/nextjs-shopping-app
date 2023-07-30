@@ -14,7 +14,7 @@ const useFetchProducts = (query: string) => {
 
   const { isLoading, data } = useQuery(["products"], {
     queryFn: async (): Promise<IAllProducts[]> => {
-      const { data } = await axios.get(`/api/products/all?limit=10`);
+      const { data } = await axios.get(`/api/products/all?limit=12`);
 
       return data;
     },
@@ -25,7 +25,7 @@ const useFetchProducts = (query: string) => {
     ["products", query],
     {
       queryFn: async (): Promise<IAllProducts[]> => {
-        const { data } = await axios.get(`/api/products/all?limit=10${query}`);
+        const { data } = await axios.get(`/api/products/all?limit=12${query}`);
 
         return data;
       },
