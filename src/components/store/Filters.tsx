@@ -188,13 +188,6 @@ const brands = [
     __v: 0,
   },
   {
-    _id: "64b11e5ed8bcaa5798a67e51",
-    label: "Dell",
-    value: "Dell",
-    icon: "https://res.cloudinary.com/dayo1mpv0/image/upload/v1689329010/ecom/brands/dell_q5kmif.png",
-    __v: 0,
-  },
-  {
     _id: "64b12301b2c9cda6b0dec0e2",
     label: "Apple",
     value: "Apple",

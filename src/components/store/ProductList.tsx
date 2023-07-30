@@ -1,5 +1,5 @@
 "use client";
-import Link from "next/link";
+
 import React from "react";
 import Cards from "../Card";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
