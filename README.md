@@ -10,7 +10,7 @@ The Next.js shopping app is a simple e-commerce application that uses Next.js, R
 - Product listing and filtering by category
 - Shopping cart and checkout functionality
 - Payment integration with Stripe
-- User authentication and authorization with Next Auth
+- User authentication and authorization with firebase
 - Data fetching and storage with MongoDB
 - Type checking with TypeScript
 - Styling with Tailwind CSS
@@ -37,9 +37,16 @@ npm install
 
 ```bash
 MONGODB_URI= # your MongoDB connection string
-NEXTAUTH_URL= # your app URL (e.g. http://localhost:3000)
+NEXT_PUBLIC_FIREBASE_API_KEY= # your firebase api key
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN= # your firebase auth domain
+NEXT_PUBLIC_FIREBASE_PROJECT_ID= # your firebase project id
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET= # your firebase storage bucket
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID= # your firebase messaging sender id
+NEXT_PUBLIC_FIREBASE_APP_ID= # your firebase app id
+
+PAYMENT_URL= # http://localhost:3000
 STRIPE_SECRET_KEY= # your Stripe secret key
-STRIPE_PUBLIC_KEY= # your Stripe public key
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY= # your Stripe public key
 ```
 
 4. Run the development server:
